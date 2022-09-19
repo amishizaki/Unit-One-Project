@@ -1,7 +1,7 @@
 # Unit-One-Project
-Unit 1 – Alina's Project ideas
-## Main idea – A box stacking game
-## Secondary idea – A memory game
+Unit 1 – Alina's Project ideas: \
+*   Main idea – A box stacking game
+*   Secondary idea – A memory game
 
 
 ### Main idea:
@@ -13,23 +13,23 @@ Stack to Escape
 The world is made of black and white. A black background with white lines. There is a door that is hard to reach and there are boxes falling from above. The player must push and stack the boxes in order to escape. The player must also avoid falling boxes because the impact is deadly. Once the player reaches the doorway, the world becomes multi-colored, and the player sprite does a little dance.
 
 ## Technologies used:
-HTML5
-CSS
-JavaScript
+*   HTML5
+*   CSS
+*   JavaScript
 
 ## User Story:
  As a player, I want the ability to... \
-    start the game \
-    move left and right \
-    jump \
-    avoid dangerous boxes \
-    push boxes \
-    lift boxes \
-    stack boxes \
-    drop boxes \
-    climb boxes \
-    reach mysterious, but promising doorway \
-    win the game \
+    ... start the game \
+    ... move left and right \
+    ... jump \
+    ... avoid dangerous boxes \
+    ... push boxes \
+    ... lift boxes \
+    ... stack boxes \
+    ... drop boxes \
+    ... climb boxes \
+    ... reach mysterious, but promising doorway \
+    ... win the game \
 
 ## Wire frames:
 ![An intro image](./stack-game-wireframe-intro.png) \
@@ -77,12 +77,12 @@ A simple puzzle game that starts with a grid of blank squares. The player must f
 
 ## User Story:
 As a player, I want the ability to... \
-    start the game \
-    click on squares and have them react \
-    explore the board by clicking on squares \
-    explore the pathways of the game \
-    find the correct pathway \
-    win the game \
+    ... start the game \
+    ... click on squares and have them react \
+    ... explore the board by clicking on squares \
+    ... explore the pathways of the game \
+    ... find the correct pathway \
+    ... win the game \
 
 ## Wire Frames:
 ![An intro image](./memory-labyrinth-intro.png) \
