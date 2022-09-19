@@ -1,13 +1,13 @@
-<!-- # Unit-One-Project
+# Unit-One-Project
 Unit 1 – Alina's Project ideas
 Main idea – A box stacking game
 Secondary idea – A memory game (starts line 54)
 
 
 Main idea:
-Stack to Escape -->
-![](stack-game-reference image.png)
+Stack to Escape
 
+![A test image](/stack-game-reference%20image.png)
 
 
 The world is made of black and white. A black background with white lines. There is a door that is hard to reach and there are boxes falling from above. The player must push and stack the boxes in order to escape. The player must also avoid falling boxes because the impact is deadly. Once the player reaches the doorway, the world becomes multi-colored, and the player sprite does a little dance.
