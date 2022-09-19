@@ -18,18 +18,18 @@ CSS
 JavaScript
 
 ## User Story:
- As a player, I want the ability to...
-start the game \
-move left and right \
-jump \
-avoid dangerous boxes \
-push boxes \
-lift boxes \
-stack boxes \
-drop boxes \
-climb boxes \
-reach mysterious, but promising doorway \
-win the game \
+ As a player, I want the ability to... \
+    start the game \
+    move left and right \
+    jump \
+    avoid dangerous boxes \
+    push boxes \
+    lift boxes \
+    stack boxes \
+    drop boxes \
+    climb boxes \
+    reach mysterious, but promising doorway \
+    win the game \
 
 ## Wire frames:
 ![An intro image](./stack-game-wireframe-intro.png) \
@@ -59,7 +59,8 @@ Render: (a method that displays the boxes are on the screen)
 function – gameloop – holds the entire logic that runs the game
 function – detectCrash – used to see if a box has fallen on the player
 function – movementHandler – used to move the player around, should be attached to arrow or wasd keys, and spacebar
-Function – detectTouch – used to help the player move boxes around```
+Function – detectTouch – used to help the player move boxes around
+```
 
  
 ## Second Idea:
@@ -75,13 +76,13 @@ A simple puzzle game that starts with a grid of blank squares. The player must f
 *   JavaScript
 
 ## User Story:
-As a player, I want the ability to...
-start the game \
-click on squares and have them react \
-explore the board by clicking on squares \
-explore the pathways of the game \
-find the correct pathway \
-win the game \
+As a player, I want the ability to... \
+    start the game \
+    click on squares and have them react \
+    explore the board by clicking on squares \
+    explore the pathways of the game \
+    find the correct pathway \
+    win the game \
 
 ## Wire Frames:
 ![An intro image](./memory-labyrinth-intro.png) \
@@ -93,16 +94,17 @@ win the game \
 
 
 ## ERDs:
-Pathway {
-```If (box === green) {
+```Pathway {
+If (box === green) {
    Pathway = correct
 } else {
    Pathway = wrong (restart)
 }
-}```
+}
 
-```function – gameloop – holds the entire logic that runs the game
+function – gameloop – holds the entire logic that runs the game
 function – offPath – used to see if a player has clicked a box off the path – delivers message and restarts game
 function – deadEnd – used to see if a player has reached a dead end – delivers message and restarts game
-function – gameWin – used to detect if the player has won```
+function – gameWin – used to detect if the player has won
+```
 
