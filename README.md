@@ -5,7 +5,10 @@ Secondary idea – A memory game (starts line 54)
 
 
 Main idea:
-Stack to Escape
+Stack to Escape -->
+![](stack-game-reference image.png)
+
+
 
 The world is made of black and white. A black background with white lines. There is a door that is hard to reach and there are boxes falling from above. The player must push and stack the boxes in order to escape. The player must also avoid falling boxes because the impact is deadly. Once the player reaches the doorway, the world becomes multi-colored, and the player sprite does a little dance.
 
@@ -80,4 +83,4 @@ Pathway = wrong (restart)
 
 function – gameloop – holds the entire logic that runs the gamefunction – offPath – used to see if a player has clicked a box off the path – delivers message and restarts gamefunction – deadEnd – used to see if a player has reached a dead end – delivers message and restarts game
 function – gameWin – used to detect if the player has won
- -->
+
