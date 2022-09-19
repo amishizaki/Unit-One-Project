@@ -1,11 +1,11 @@
 # Unit-One-Project
-Unit 1 – Alina's Project ideas: \
+Unit 1 – Alina's Project ideas:
 *   Main idea – A box stacking game
 *   Secondary idea – A memory game
 
 
 ### Main idea:
-Stack to Escape
+## Stack to Escape
 
 ![A reference image](/stack-game-reference%20image.png)
 
@@ -63,10 +63,10 @@ Function – detectTouch – used to help the player move boxes around
 ```
 
  
-## Second Idea:
+### Second Idea:
 
 ## Memory Labyrinth
-## ![An overview image](./memory-labyrinth.png)
+![An overview image](./memory-labyrinth.png)
 
 A simple puzzle game that starts with a grid of blank squares. The player must flip the squares to find the correct pathway to the MacGuffin. There are multiple pathways, but only one will lead to victory. If the player flips a square that does not contain a path piece, the squares flip back over, and the player must try again. If the player follows the wrong path to the dead end, the squares will flip back over, and the player must try again. When the player reaches the end of the labyrinth, the player wins a virtual MacGuffin!
 
