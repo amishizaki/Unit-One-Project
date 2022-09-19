@@ -19,8 +19,10 @@ JavaScript
 
 User Story:
  As a player, I want the ability to...
+start the game
 move left and right
 jump
+avoid dangerous boxes
 push boxes
 lift boxes
 stack boxes
@@ -71,8 +73,12 @@ CSS
 JavaScript
 
 User Story:
- As a player, I want the ability to...
+As a player, I want the ability to...
+start the game
 click on squares and have them react
+explore the board by clicking on squares
+explore the pathways of the game
+find the correct pathway
 win the game
 
 Wire Frames:
