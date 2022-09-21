@@ -90,7 +90,7 @@ As a player, I want the ability to... \
 ![A test image](./memory-labyrinth-overview.png) \
 ![offpath](./memory-labyrinth-offPath.png) \
 ![deadend](./memory-labyrinth-deadend.png) \
-![win](./memory-labyrinth-win.png) \
+![win](./memory-labyrinth-win.png) 
 
 
 ## ERDs:
