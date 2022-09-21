@@ -23,6 +23,9 @@ let raf
 
 game.setAttribute('width', getComputedStyle(game)['width'])
 game.setAttribute('height', getComputedStyle(game)['height'])
+ctx.width=game.width
+ctx.height=game.height
+// ctx.lineWidth=5
 
 //SFX
 // let scoreSFX = new Audio("");
@@ -39,61 +42,80 @@ function makeDoor() {
     }
 }
 
-// makeDoor();
-// console.log(makeDoor())
+makeDoor();
+console.log(makeDoor())
 
-// Box creation. There will be multiple boxes spanning from above the player.
-const box = {
-        x: 50,
-        y: 300,
-        vx: 5,
-        vx: 5,
-        color: 'pink',
-        width: 120,
-        height: 120,
-        isFalling: true,
-        isHeld: false,
-        isStacked: false,
-        draw () {
-            ctx.beginPath();
+// Box creation. There will be multiple boxes spanning from above the character.
+const Box = class { //consider making this a class more easily making boxes
+    constructor (x, y, color) {
+        this.x = x,
+        this.y = y,
+        this.vx = 0,
+        this.vy = 5,
+        this.color = color,
+        this.width = 75,
+        this.height = 75,
+        this.falling = true,
+        this.isHeld = false,
+        this.isStacked = false,
+        this.draw = () => {
+            // ctx.beginPath();
             // ctx.arc(this.x, this.y, this.width, this.height, Math.PI * 2, true);
-            ctx.closePath();
-            ctx.fillStyle = this.color
-            ctx.fill();
+            // ctx.closePath();
+            ctx.fillRect(this.x, this.y, this.width, this.height)
+            ctx.strokeRect(this.x, this.y, this.width, this.height)
+            // ctx.fillStyle = this.color
+            // ctx.fill();
+            console.log(this.height)
+
+            },    
+        this.fall = () => {
+            this.x = this.x+this.vx,
+            this.y = this.y+this.vy,
+            this.draw()
+            
+            }
         }
     }
 
-function draw() {
-    ctx.fillStyle = 'rgba(255, 255, 255, .3)';
-    ctx.fillRect(0, 0, game.width, game.height);
-    box.draw();
-    box.x += box.vx; 
-    box.y += box.vy;
-    box.vy *= .99;
-    box.vy += .25;
+const AndrewsBox = new Box(50, 300, 'blue');
+console.log('this is the box object', AndrewsBox);
+console.log('this is the game', game);
+AndrewsBox.draw()
+game.addEventListener('mousemove', function(event){
+    AndrewsBox.draw(ctx)
+})
+// function draw(box) {
+//     ctx.fillStyle = 'rgba(255, 255, 255, .3)';
+//     ctx.fillRect(0, 0, game.width, game.height);
+//     // box.draw();
+//     box.x += box.vx; 
+//     box.y += box.vy;
+//     box.vy *= .99;
+//     box.vy += .25;
     
-    if (box.y + box.vy > game.height ||
-        box.y + box.vy < 0) {
-            box.vy =-box.vy;
-        }
-    if (box.x + box.xy > game.width ||
-        box.x + box.xy < 0) {
-            box.vy =-box.xy;
-        }
-    raf = window.requestAnimationFrame(draw);
-    console.log('what does raf do?', raf)
-}
+//     if (box.y + box.vy > game.height ||
+//         box.y + box.vy < 0) {
+//             box.vy =-box.vy;
+//         }
+//     if (box.x + box.xy > game.width ||
+//         box.x + box.xy < 0) {
+//             box.vy =-box.xy;
+//         }
+//     raf = window.requestAnimationFrame(draw);
+//     console.log('what does raf do?', raf)
+// }
 
-game.addEventListener('DOMContentLoaded', (e) => {
-    raf = window.requestAnimationFrame(draw);
-});
-game.addEventListener('DOMContentLoaded', (e) =>{
-    window.cancelAnimationFrame(raf);
-});
+// game.addEventListener('DOMContentLoaded', (e) => {
+//     raf = window.requestAnimationFrame(draw);
+// });
+// // game.addEventListener('DOMContentLoaded', (e) =>{
+//     window.cancelAnimationFrame(raf);
+// });
 
-box.draw();
-console.log('this is a box?', box)
-console.log('this should be drawing the box', box.draw())
+// box.draw();
+// console.log('this is a box?', box)
+// console.log('this should be drawing the box', box.draw())
 
 // the main character
 class Character {
@@ -160,7 +182,7 @@ class Character {
         //     if (key.toLowerCase() == 'd') { this.direction.right = false }
         // },
 
-        // this.movePlayer = function () {
+        // this.moveCharacter = function () {
         //     if (this.direction.up) {
         //         this.y -= this.speed
         //         if (this.y <= 0) {
@@ -192,27 +214,27 @@ class Character {
         // }
     }
 
-    let character = new Character(150, 350, 50, "white")
+    // let character = new Character(150, 350, 50, "white")
 
     function animate () {
         requestAnimationFrame(animate)
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-
+        
         // Canvas Logic
         // drawBackground();
         // Foreground
-        // player.draw();
+        // character.draw();
     }
 
-    animate();
+    // animate();
 
     // Event Listeners
     addEventListener("keydown", e =>{
         if(e.code === "Space") {
-            if(!player.shouldJump) {
+            if(!character.shouldJump) {
                 // jumpSFX.play();
-                player.jumpCounter = 0;
-                player.shouldJump = true;
+                character.jumpCounter = 0;
+                character.shouldJump = true;
             }
         }
     })
@@ -223,44 +245,57 @@ class Character {
 //     return (Math.floor.random() * max)
 // }
 
-// const player = new Character(10, 450, 'white', 50, 50, true)
+const character = new Character(10, 450, 'white', 50, 50, true)
 // const box = new Box(10, 10, 'pink', 170, 170)
 // const boxTwo = new Box(randomBoxes(game.width), 50, 'red', 64, 96, true)
 
 document.addEventListener('keydown', (e) =>{
-    player.setDirection(e.key)
+    character.setDirection(e.key)
 })
 
 document.addEventListener('keyup', (e) =>{
     if(['w', 'a', 's', 'd'].includes(e.key)) {
-        player.unsetDirection(e.key)
+        character.unsetDirection(e.key)
     }
 })
 
 // const detectHit = (boxFall) => {
 //     // when the box is falling, the box can kill the character
-//     if(player.x + player.y === boxFall.x + boxFall.y) {
-//         player.alive = false
+//     if(chacharacter.x + chacharacter.y === boxFall.x + boxFall.y) {
+//         chacharacter.alive = false
 //     }
 // }
 
 const gameLoop = () => {
     ctx.clearRect(0, 0, game.width, game.height)
 
+    if (AndrewsBox.falling === true) {
+        AndrewsBox.fall()
+    }
+
+    if (AndrewsBox.y + AndrewsBox.vy > game.height ||
+            AndrewsBox.y + AndrewsBox.vy < 0) {
+            AndrewsBox.vy =- AndrewsBox.vy;
+                }
+    if (AndrewsBox.x + AndrewsBox.xy > game.width ||
+            AndrewsBox.x + AndrewsBox.xy < 0) {
+            AndrewsBox.vy =-AndrewsBox.xy;
+                }
+
     // box falling loop goes here
     // box stacking loop goes here
     // door reached or not loop goes here
 
-    // if (player.alive) {
+    // if (character.alive) {
     //     box.render()
     //     detectHit(box)
-    // // } else if (player.alive === false) {
+    // // } else if (character.alive === false) {
     //     stopGameLoop()
     // }
 
-    // movement.textContent = player.x + ", " + player.y
-    // player.render()
-    // player.movePlayer()
+    // movement.textContent = character.x + ", " + character.y
+    // character.render()
+    // character.movecharacter()
     // box.render()
 }
 
