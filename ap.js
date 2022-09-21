@@ -32,6 +32,11 @@ ctx.height=game.height
 // let gameOverSFX = new Audio("")
 // let jumpSFX = new Audio("")
 
+// Start Game button!
+function startBtn() {
+
+} 
+
 // Portal creation - fixed object - interactable
 function makeDoor() {
     door = new Image ();
@@ -45,8 +50,8 @@ function makeDoor() {
 makeDoor();
 console.log(makeDoor())
 
-// Box creation. There will be multiple boxes spanning from above the character.
-const Box = class { //consider making this a class more easily making boxes
+// Box creation. There will be multiple boxes spanning from the top of the screen
+const Box = class { //consider making this a class for easily making boxes
     constructor (x, y, color) {
         this.x = x,
         this.y = y,
@@ -82,7 +87,7 @@ const AndrewsBox = new Box(50, 300, 'blue');
 console.log('this is the box object', AndrewsBox);
 console.log('this is the game', game);
 AndrewsBox.draw()
-game.addEventListener('mousemove', function(event){
+game.addEventListener('buttonclick', function(event){
     AndrewsBox.draw(ctx)
 })
 // function draw(box) {
