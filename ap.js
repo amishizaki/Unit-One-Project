@@ -1,6 +1,7 @@
 //////////// Game Devloping Rules //////////////
 // There are three entity categories: 1) Character 2) Door 3) Boxes
-// The character is movable with WASD or arrow keys
+// The character is movable with from side to side with keys 'a' and 'd'
+// The character can also jump with the space bar
 // The door is stationary
 // The boxes fall from above from a randomized point of origin
 // The falling boxes can kill the character
@@ -14,9 +15,8 @@
 
 const game = document.getElementById('canvas')
 const ctx = game.getContext('2d')
-// const gravity = 1
-// const friction =.99
-let raf
+const button = document.getElementById('startBtn')
+let raf;
 
 // canvas.width = window.innerWidth;
 // canvas.height = window.innerHeight;
@@ -33,9 +33,9 @@ ctx.height=game.height
 // let jumpSFX = new Audio("")
 
 // Start Game button!
-function startBtn() {
+// function startBtn() {
 
-} 
+// } 
 
 // Portal creation - fixed object - interactable
 function makeDoor() {
@@ -58,6 +58,7 @@ const Box = class { //consider making this a class for easily making boxes
         this.vx = 0,
         this.vy = 5,
         this.color = color,
+        this.border = 'white',
         this.width = 75,
         this.height = 75,
         this.falling = true,
@@ -83,11 +84,11 @@ const Box = class { //consider making this a class for easily making boxes
         }
     }
 
-const AndrewsBox = new Box(50, 300, 'blue');
+const AndrewsBox = new Box(50, 15, 'blue');
 console.log('this is the box object', AndrewsBox);
 console.log('this is the game', game);
 AndrewsBox.draw()
-game.addEventListener('buttonclick', function(event){
+game.addEventListener('button.click', function(event){
     AndrewsBox.draw(ctx)
 })
 // function draw(box) {
@@ -142,84 +143,85 @@ class Character {
             left: false,
             right: false,
         }
-    }
+    
+        // jump() {
+        //     if(this.shouldJump) {
+        //         this.jumpCounter++
+        //         if(this.jumpCounter < 15) {
+        //             // jump up
+        //             this.y -= this.jumpHeight;
+        //         } else if(this.jumpCounter > 14 && this.jumpCounter < 19) {
+        //             this.y += 0;
+        //         } else if(this.jumpCounter < 33) {
+        //             // fall back down
+        //             this.y += this.jumpHeight;
+        //         }
+        //         // End the cycle
+        //         if (this.jumpCounter >= 32) {
+        //             this.shouldJump = false;
+        //         }
+        //     }
+        // }
 
-        jump() {
-            if(this.shouldJump) {
-                this.jumpCounter++
-                if(this.jumpCounter < 15) {
-                    // jump up
-                    this.y -= this.jumpHeight;
-                } else if(this.jumpCounter > 14 && this.jumpCounter < 19) {
-                    this.y += 0;
-                } else if(this.jumpCounter < 33) {
-                    // fall back down
-                    this.y += this.jumpHeight;
-                }
-                // End the cycle
-                if (this.jumpCounter >= 32) {
-                    this.shouldJump = false;
-                }
-            }
-        }
-
-        draw() {
-            this.jump();
-            ctx.fillStyle = this.color;
-            ctx.fillRect(this.x, this.y, this.size, this.size);
-            // this.size is NOT A TYPO
-        }
+        // draw() {
+        //     this.jump();
+        //     ctx.fillStyle = this.color;
+        //     ctx.fillRect(this.x, this.y, this.size, this.size);
+        //     // this.size is NOT A TYPO
+        // }
 
         // horizontal movement
-        // this.setDirection = function (key) {
-        //     // console.log('this is the key that was pressed', key)
-        //     // if (key.toLowerCase() == 'w') { this.direction.up = true }
-        //     if (key.toLowerCase() == 'a') { this.direction.left = true }
-        //     // if (key.toLowerCase() == 's') { this.direction.down = true }
-        //     if (key.toLowerCase() == 'd') { this.direction.right = true }
-        // },
+        this.setDirection = function (key) {
+            // console.log('this is the key that was pressed', key)
+            // if (key.toLowerCase() == 'w') { this.direction.up = true }
+            if (key.toLowerCase() == 'a') { this.direction.left = true }
+            // if (key.toLowerCase() == 's') { this.direction.down = true }
+            if (key.toLowerCase() == 'd') { this.direction.right = true }
+        },
 
-        // this.unsetDirection = function (key) {
-        //     // console.log('this is the key that was released', key)
-        //     // if (key.toLowerCase() == 'w') { this.direction.up = false }
-        //     if (key.toLowerCase() == 'a') { this.direction.left = false }
-        //     // if (key.toLowerCase() == 's') { this.direction.down = false }
-        //     if (key.toLowerCase() == 'd') { this.direction.right = false }
-        // },
+        this.unsetDirection = function (key) {
+            // console.log('this is the key that was released', key)
+            // if (key.toLowerCase() == 'w') { this.direction.up = false }
+            if (key.toLowerCase() == 'a') { this.direction.left = false }
+            // if (key.toLowerCase() == 's') { this.direction.down = false }
+            if (key.toLowerCase() == 'd') { this.direction.right = false }
+        },
 
-        // this.moveCharacter = function () {
-        //     if (this.direction.up) {
-        //         this.y -= this.speed
-        //         if (this.y <= 0) {
-        //             this.y = 0
-        //         }
-        //     }
-        //     if (this.direction.left) {
-        //         this.x -= this.speed
-        //         if (this.x <= 0) {
-        //             this.x = 0
-        //         }
-        //     }
-        //     if (this.direction.down) {
-        //         this.y += this.speed
-        //         if (this.y + this.height >= game.height) {
-        //             this.y = game.height - this.height
-        //         }
-        //     }
-        //     if (this.direction.right) {
-        //         this.x += this.speed
-        //         if (this.x + this.width >= game.width) {
-        //             this.x = game.width - this.width
-        //         }
-        //     }
-        // },
-        // this.render = function () {
-        //     ctx.fillStyle = this.color
-        //     ctx.fillRect(this.x, this.y, this.width, this.height)
-        // }
+        this.moveCharacter = function () {
+            if (this.direction.up) {
+                this.y -= this.speed
+                if (this.y <= 0) {
+                    this.y = 0
+                }
+            }
+            if (this.direction.left) {
+                this.x -= this.speed
+                if (this.x <= 0) {
+                    this.x = 0
+                }
+            }
+            if (this.direction.down) {
+                this.y += this.speed
+                if (this.y + this.height >= game.height) {
+                    this.y = game.height - this.height
+                }
+            }
+            if (this.direction.right) {
+                this.x += this.speed
+                if (this.x + this.width >= game.width) {
+                    this.x = game.width - this.width
+                }
+            }
+        },
+        this.render = function () {
+            ctx.fillStyle = this.color
+            ctx.fillRect(this.x, this.y, this.width, this.height)
+            }
+        }
     }
 
-    // let character = new Character(150, 350, 50, "white")
+
+    let character = new Character(150, 350, 50, "white")
 
     function animate () {
         requestAnimationFrame(animate)
@@ -232,27 +234,22 @@ class Character {
     }
 
     // animate();
+    // const character = new Character(10, 450, 'white', 50, 50, true)
+    // random box placement
+    // const randomBoxes = (max) => {
+    //     return (Math.floor.random() * max)
+    // }
 
     // Event Listeners
-    addEventListener("keydown", e =>{
-        if(e.code === "Space") {
-            if(!character.shouldJump) {
-                // jumpSFX.play();
-                character.jumpCounter = 0;
-                character.shouldJump = true;
-            }
-        }
-    })
-
-
-// random box placement
-// const randomBoxes = (max) => {
-//     return (Math.floor.random() * max)
-// }
-
-const character = new Character(10, 450, 'white', 50, 50, true)
-// const box = new Box(10, 10, 'pink', 170, 170)
-// const boxTwo = new Box(randomBoxes(game.width), 50, 'red', 64, 96, true)
+    // addEventListener("keydown", e =>{
+    //     if(e.code === "Space") {
+    //         if(!character.shouldJump) {
+    //             // jumpSFX.play();
+    //             character.jumpCounter = 0;
+    //             character.shouldJump = true;
+    //         }
+    //     }
+    // })
 
 document.addEventListener('keydown', (e) =>{
     character.setDirection(e.key)
@@ -277,15 +274,15 @@ const gameLoop = () => {
     if (AndrewsBox.falling === true) {
         AndrewsBox.fall()
     }
-
     if (AndrewsBox.y + AndrewsBox.vy > game.height ||
-            AndrewsBox.y + AndrewsBox.vy < 0) {
-            AndrewsBox.vy =- AndrewsBox.vy;
-                }
-    if (AndrewsBox.x + AndrewsBox.xy > game.width ||
-            AndrewsBox.x + AndrewsBox.xy < 0) {
-            AndrewsBox.vy =-AndrewsBox.xy;
-                }
+        AndrewsBox.y + AndrewsBox.vy < 0) {
+        AndrewsBox.vy = -AndrewsBox.vy;
+            }
+
+    if (Character.alive === true) {
+        // music
+        AndrewsBox.fall()
+    }
 
     // box falling loop goes here
     // box stacking loop goes here
