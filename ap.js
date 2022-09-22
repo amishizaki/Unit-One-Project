@@ -25,6 +25,7 @@ game.setAttribute('width', getComputedStyle(game)['width'])
 game.setAttribute('height', getComputedStyle(game)['height'])
 ctx.width=game.width
 ctx.height=game.height
+ctx.floor=game.floor
 // ctx.lineWidth=5
 
 //SFX
@@ -32,7 +33,7 @@ ctx.height=game.height
 // let gameOverSFX = new Audio("")
 // let jumpSFX = new Audio("")
 
-// Start Game button!
+// Testing start Game button!
 // function startBtn() {
 
 // } 
@@ -58,7 +59,6 @@ const Box = class { //consider making this a class for easily making boxes
         this.vx = 0,
         this.vy = 5,
         this.color = color,
-        this.border = 'white',
         this.width = 75,
         this.height = 75,
         this.falling = true,
@@ -79,7 +79,12 @@ const Box = class { //consider making this a class for easily making boxes
             this.x = this.x+this.vx,
             this.y = this.y+this.vy,
             this.draw()
-            
+            if (this.x <= 0) {
+                this.x = 0
+            }
+            if (this.y <= 0) {
+                this.y = 0
+            }
             }
         }
     }
@@ -88,6 +93,8 @@ const AndrewsBox = new Box(50, 15, 'black');
 // console.log('this is the box object', AndrewsBox);
 // console.log('this is the game', game);
 AndrewsBox.draw()
+
+// Eventually this button will start the whole game - should probably go in game loop
 game.addEventListener('button.click', function(event){
     AndrewsBox.draw(ctx)
 })
@@ -137,8 +144,8 @@ function generateBlocks() {
 // the main character
 class Character {
     constructor(x, y, width, height, alive) {
-        this.x = x,
-        this.y = y,
+        this.x = 0,
+        this.y = 550,
         this.width = width,
         this.height = height,
         this.alive = alive,
@@ -286,14 +293,11 @@ const gameLoop = () => {
     if (AndrewsBox.falling === true) {
         AndrewsBox.fall()
     }
-    if (AndrewsBox.y + AndrewsBox.vy > game.height ||
-        AndrewsBox.y + AndrewsBox.vy < 0) {
-        AndrewsBox.vy = -AndrewsBox.vy;
-            }
     
     // this will replace the loop above, when I figure out my rendering issue
     if (Character.alive === true) {
         // music
+        AndrewsBox.falling === true
         AndrewsBox.fall()
     }
 
@@ -311,7 +315,7 @@ const gameLoop = () => {
     // movement.textContent = character.x + ", " + character.y
     character.render()
     character.moveCharacter()
-    console.log('character movement', character.moveCharacter)
+    // console.log('character movement', character.moveCharacter)
     // box.render()
 }
 
