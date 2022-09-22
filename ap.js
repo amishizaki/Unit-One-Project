@@ -72,7 +72,7 @@ const Box = class { //consider making this a class for easily making boxes
             ctx.strokeRect(this.x, this.y, this.width, this.height)
             // ctx.fillStyle = this.color
             // ctx.fill();
-            console.log(this.height)
+            // console.log(this.height)
 
             },    
         this.fall = () => {
@@ -84,13 +84,24 @@ const Box = class { //consider making this a class for easily making boxes
         }
     }
 
-const AndrewsBox = new Box(50, 15, 'blue');
-console.log('this is the box object', AndrewsBox);
-console.log('this is the game', game);
+const AndrewsBox = new Box(50, 15, 'black');
+// console.log('this is the box object', AndrewsBox);
+// console.log('this is the game', game);
 AndrewsBox.draw()
 game.addEventListener('button.click', function(event){
     AndrewsBox.draw(ctx)
 })
+
+// Boxes get sorted here after they've entered the screen
+let arrayBoxes = [];
+
+// auto generate blocks
+function generateBlocks() {
+    let timeDelay = randomNumberInterval(presetTime);
+    arrayBoxes.push(new AvoidBox(50, enemySpeed));
+}
+
+
 // function draw(box) {
 //     ctx.fillStyle = 'rgba(255, 255, 255, .3)';
 //     ctx.fillRect(0, 0, game.width, game.height);
@@ -125,12 +136,13 @@ game.addEventListener('button.click', function(event){
 
 // the main character
 class Character {
-    constructor(x, y, size, color, alive) {
+    constructor(x, y, width, height, alive) {
         this.x = x,
         this.y = y,
-        this.size = size,
-        this.color = color,
+        this.width = width,
+        this.height = height,
         this.alive = alive,
+        this.color = 'black',
         this.jumpHeight = 12;
         this.shouldJump = false;
         this.jumpCounter = 0;
@@ -221,19 +233,19 @@ class Character {
     }
 
 
-    let character = new Character(150, 350, 50, "white")
+    const character = new Character(0, 550, 50, 50, true)
 
     function animate () {
         requestAnimationFrame(animate)
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         
         // Canvas Logic
-        // drawBackground();
+        drawBackground();
         // Foreground
-        // character.draw();
+        character.draw();
     }
 
-    // animate();
+    // animate(character);
     // const character = new Character(10, 450, 'white', 50, 50, true)
     // random box placement
     // const randomBoxes = (max) => {
@@ -261,12 +273,12 @@ document.addEventListener('keyup', (e) =>{
     }
 })
 
-// const detectHit = (boxFall) => {
-//     // when the box is falling, the box can kill the character
-//     if(chacharacter.x + chacharacter.y === boxFall.x + boxFall.y) {
-//         chacharacter.alive = false
-//     }
-// }
+const detectHit = (thing) => {
+    // when the box is falling, the box can kill the character
+    if(character.x + character.y === boxFall.x + boxFall.y) {
+        character.alive = false
+    }
+}
 
 const gameLoop = () => {
     ctx.clearRect(0, 0, game.width, game.height)
@@ -278,7 +290,8 @@ const gameLoop = () => {
         AndrewsBox.y + AndrewsBox.vy < 0) {
         AndrewsBox.vy = -AndrewsBox.vy;
             }
-
+    
+    // this will replace the loop above, when I figure out my rendering issue
     if (Character.alive === true) {
         // music
         AndrewsBox.fall()
@@ -296,8 +309,9 @@ const gameLoop = () => {
     // }
 
     // movement.textContent = character.x + ", " + character.y
-    // character.render()
-    // character.movecharacter()
+    character.render()
+    character.moveCharacter()
+    console.log('character movement', character.moveCharacter)
     // box.render()
 }
 
