@@ -143,11 +143,11 @@ function generateBlocks() {
 
 // the main character
 class Character {
-    constructor(x, y, width, height, alive) {
+    constructor(width, height, alive) {
         this.x = 0,
         this.y = 550,
-        this.width = width,
-        this.height = height,
+        this.width = 50,
+        this.height = 50,
         this.alive = alive,
         this.color = 'black',
         this.jumpHeight = 12;
@@ -180,15 +180,14 @@ class Character {
         //             this.shouldJump = false;
         //         }
         //     }
-        // }
-
+        
         // draw() {
         //     this.jump();
         //     ctx.fillStyle = this.color;
         //     ctx.fillRect(this.x, this.y, this.size, this.size);
         //     // this.size is NOT A TYPO
+        //     }
         // }
-
         // horizontal movement
         this.setDirection = function (key) {
             // console.log('this is the key that was pressed', key)
@@ -240,7 +239,7 @@ class Character {
     }
 
 
-    const character = new Character(0, 550, 50, 50, true)
+    const character = new Character(true)
 
     function animate () {
         requestAnimationFrame(animate)
