@@ -57,7 +57,7 @@ class Portal {
 }
 
 const portal = new Portal(false) 
-portal.draw()
+// portal.draw()
 
 // makeDoor();
 // console.log('door', makeDoor())
@@ -69,7 +69,7 @@ const Box = class { //consider making this a class for easily making boxes
         this.y = y,
         this.vx = 0,
         this.vy = 5,
-        this.color = 'pink',
+        this.color = 'black',
         this.width = 75,
         this.height = 75,
         this.falling = true,
@@ -81,40 +81,47 @@ const Box = class { //consider making this a class for easily making boxes
             // ctx.closePath();
             ctx.fillRect(this.x, this.y, this.width, this.height)
             ctx.strokeRect(this.x, this.y, this.width, this.height)
-            // ctx.fillStyle = this.color
+            ctx.fillStyle = this.color
             // ctx.fill();
             // console.log(this.height)
             },    
-            this.fall = () => {
-            if (this.y > 530) {
+        this.fall = () => {
+            if (this.y >= 530) {
                 // console.log('this is y', this.y)
                 this.y = 530
+            } else {
+            this.y = this.y+this.vy
+            // this.x = this.x+this.xy
             }
-            this.y = this.y+this.vy,
-            // this.x = this.x+this.xy,
-            this.draw()
-            }
+        }
+            // this.draw()
         }
     }
 
 const AndrewsBox = new Box(50, 0);
 // console.log('this is the box object', AndrewsBox);
 // console.log('this is the game', game);
-AndrewsBox.draw()
+// AndrewsBox.draw()
 
 // Eventually this button will start the whole game - should probably go in game loop
-game.addEventListener('button.click', function(event){
-    AndrewsBox.draw(ctx)
-})
+// game.addEventListener('button.click', function(event){
+//     AndrewsBox.draw(ctx)
+// })
 
 // Boxes get sorted here after they've entered the screen
-let arrayBoxes = [];
+let arrayBoxes = [AndrewsBox];
 
 // auto generate blocks
-function generateBlocks() {
-    let timeDelay = randomNumberInterval(presetTime);
-    arrayBoxes.push(new AvoidBox(50, enemySpeed));
+function generateBox() {
+    // let timeDelay = randomNumberInterval(presetTime);
+    const newX = Math.floor(Math.random()*650)
+    arrayBoxes.push(new Box(newX, 0))
+    // console.log('generate box', arrayBoxes)
+    // console.log('making a box', new Box(newX, 0))
+    // console.log('new math', newX)
 }
+
+// set timer and set max produced boxed
 
 // unused box drawing coding
 // function draw(box) {
@@ -158,20 +165,19 @@ class Character {
         this.height = 50,
         this.alive = alive,
         this.color = 'black',
-        this.jumpHeight = 12;
-        this.shouldJump = false;
         // this.jumpCounter = 0;
         // this.isHolding = false,
         // this.escaped = false,
         this.speed = 15,
+        this.jumpHeight = 12,
+        this.shouldJump = false,
         this.direction = {
             // up: false,
             // down: false,
             left: false,
             right: false,
-        }
+        },
     
-
 
         // A jump that should work?
     // jump() {
@@ -210,7 +216,7 @@ class Character {
         // }
 
         // horizontal movement
-        this.setDirection = function (key) {
+        this.setDirection = (key) => {
             console.log('this is the key that was pressed', key)
             if (key.toLowerCase() === 'space') { this.direction.up = true }
             if (key.toLowerCase() == 'a') { this.direction.left = true }
@@ -218,7 +224,7 @@ class Character {
             if (key.toLowerCase() == 'd') { this.direction.right = true }
         },
 
-        this.unsetDirection = function (key) {
+        this.unsetDirection = (key) => {
             console.log('this is the key that was released', key)
             if (key.toLowerCase() === 'space') { this.direction.up = false }
             if (key.toLowerCase() == 'a') { this.direction.left = false }
@@ -226,7 +232,7 @@ class Character {
             if (key.toLowerCase() == 'd') { this.direction.right = false }
         },
 
-        this.moveCharacter = function () {
+        this.moveCharacter = () => {
             if (this.direction.up) {
                 this.y -= this.speed
                 if (this.y <= 0) {
@@ -252,12 +258,12 @@ class Character {
                 }
             }
         },
-        this.render = function () {
+        this.render = () => {
             ctx.fillStyle = this.color
             ctx.fillRect(this.x, this.y, this.width, this.height)
-            }
         }
     }
+}
 
 
     const character = new Character(true)
@@ -303,7 +309,7 @@ document.addEventListener('keyup', (e) =>{
 
 const detectHit = (thing) => {
     // when the box is falling, the box can kill the character
-    if(character.x + character.y === boxFall.x + boxFall.y) {
+    if(character.x + character.y === thing.x + thing.y) {
         character.alive = false
     }
 }
@@ -311,20 +317,29 @@ const detectHit = (thing) => {
 const gameLoop = () => {
     ctx.clearRect(0, 0, game.width, game.height)
 
-    if (AndrewsBox.falling === true) {
-        AndrewsBox.fall()
-    }
+    // if (AndrewsBox.falling === true) {
+    //     AndrewsBox.fall()
+    // }
 
     if (portal.isReached === false) {
         portal.draw()
     }
     
     // this will replace the loop above, when I figure out my rendering issue
-    // if (Character.alive === true) {
-    //     // music
-    //     AndrewsBox.falling === true
-    //     AndrewsBox.fall()
-    // }
+    if (character.alive === true) {
+        // music
+        generateBox()
+        console.log(arrayBoxes)
+        arrayBoxes.forEach((box) => {
+            box.fall()
+            // console.log(box)
+            // check for collisions here
+            box.draw()
+        })
+        // AndrewsBox.falling === true
+        // AndrewsBox.fall()
+    }
+    // check for falling, if not, stop
 
     // box falling loop goes here
     // box stacking loop goes here
@@ -338,8 +353,8 @@ const gameLoop = () => {
     // }
 
     // movement.textContent = character.x + ", " + character.y
-    character.render()
     character.moveCharacter()
+    character.render()
     // console.log('character movement', character.moveCharacter)
     // box.render()
 }
