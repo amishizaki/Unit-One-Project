@@ -109,19 +109,29 @@ const AndrewsBox = new Box(50, 0);
 // })
 
 // Boxes get sorted here after they've entered the screen
-let arrayBoxes = [AndrewsBox];
+let arrayBoxes = [];
+
+let boxTimer = 0
+let dropSpeed = 60
 
 // auto generate blocks
 function generateBox() {
+    // console.log('array box length', arrayBoxes.length)
+    // console.log('this is the boxTimer', boxTimer)
     // let timeDelay = randomNumberInterval(presetTime);
-    const newX = Math.floor(Math.random()*650)
-    arrayBoxes.push(new Box(newX, 0))
+    // set timer and set max produced boxed
+    if(boxTimer === dropSpeed) {
+        const newX = Math.floor(Math.random()*650)
+        arrayBoxes.push(new Box(newX, 0))
+    } else if (boxTimer > dropSpeed) {
+        boxTimer = 0;
+    }
+    boxTimer++
+
     // console.log('generate box', arrayBoxes)
     // console.log('making a box', new Box(newX, 0))
     // console.log('new math', newX)
 }
-
-// set timer and set max produced boxed
 
 // unused box drawing coding
 // function draw(box) {
@@ -164,7 +174,7 @@ class Character {
         this.width = 50,
         this.height = 50,
         this.alive = alive,
-        this.color = 'black',
+        this.color = 'white',
         // this.jumpCounter = 0;
         // this.isHolding = false,
         // this.escaped = false,
@@ -317,10 +327,6 @@ const detectHit = (thing) => {
 const gameLoop = () => {
     ctx.clearRect(0, 0, game.width, game.height)
 
-    // if (AndrewsBox.falling === true) {
-    //     AndrewsBox.fall()
-    // }
-
     if (portal.isReached === false) {
         portal.draw()
     }
@@ -329,28 +335,30 @@ const gameLoop = () => {
     if (character.alive === true) {
         // music
         generateBox()
-        console.log(arrayBoxes)
+        // console.log(arrayBoxes)
         arrayBoxes.forEach((box) => {
             box.fall()
             // console.log(box)
             // check for collisions here
             box.draw()
         })
-        // AndrewsBox.falling === true
-        // AndrewsBox.fall()
     }
+
+    // if(arrayBoxes.length > 50) {
+    //     generateBox()
+    // }
+    
     // check for falling, if not, stop
 
     // box falling loop goes here
     // box stacking loop goes here
     // door reached or not loop goes here
 
-    // if (character.alive) {
-    //     box.render()
-    //     detectHit(box)
-    // // } else if (character.alive === false) {
-    //     stopGameLoop()
-    // }
+    if (character.alive) {
+        detectHit(arrayBoxes)
+    } else if (character.alive === false) {
+        stopGameLoop()
+    }
 
     // movement.textContent = character.x + ", " + character.y
     character.moveCharacter()

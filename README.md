@@ -7,7 +7,7 @@ Unit 1 – Alina's Project ideas:
 ### Main idea:
 ## Stack to Escape
 
-![A reference image](/stack-game-reference%20image.png)
+![A reference image](/gamePlanning/stack-game-reference%20image.png)
 
 
 The world is made of black and white. A black background with white lines. There is a door that is hard to reach and there are boxes falling from above. The player must push and stack the boxes in order to escape. The player must also avoid falling boxes because the impact is deadly. Once the player reaches the doorway, the world becomes multi-colored, and the player sprite does a little dance.
@@ -32,10 +32,10 @@ The world is made of black and white. A black background with white lines. There
     ... win the game \
 
 ## Wire frames:
-![An intro image](./stack-game-wireframe-intro.png) \
-![An image of death](./stack-game-wireframe-loss.png) \
-![An image of winning](./stack-game-wireframe-win.png) \
-![An overview](./stack-game-wireframe.png) \
+![An intro image](/gamePlanning//stack-game-wireframe-intro.png) \
+![An image of death](/gamePlanning/stack-game-wireframe-loss.png) \
+![An image of winning](/gamePlanning/stack-game-wireframe-win.png) \
+![An overview](/gamePlanning/stack-game-wireframe.png) \
 
 ## ERDs:
 ```Player: {
@@ -66,7 +66,7 @@ Function – detectTouch – used to help the player move boxes around
 ### Second Idea:
 
 ## Memory Labyrinth
-![An overview image](./memory-labyrinth.png)
+![An overview image](/gamePlanning/memory-labyrinth.png)
 
 A simple puzzle game that starts with a grid of blank squares. The player must flip the squares to find the correct pathway to the MacGuffin. There are multiple pathways, but only one will lead to victory. If the player flips a square that does not contain a path piece, the squares flip back over, and the player must try again. If the player follows the wrong path to the dead end, the squares will flip back over, and the player must try again. When the player reaches the end of the labyrinth, the player wins a virtual MacGuffin!
 
@@ -85,12 +85,12 @@ As a player, I want the ability to... \
     ... win the game \
 
 ## Wire Frames:
-![An intro image](./memory-labyrinth-intro.png) \
+![An intro image](/gamePlanning/memory-labyrinth-intro.png) \
 (behind the scences overview) \
-![A test image](./memory-labyrinth-overview.png) \
-![offpath](./memory-labyrinth-offPath.png) \
-![deadend](./memory-labyrinth-deadend.png) \
-![win](./memory-labyrinth-win.png) 
+![A test image](/gamePlanning/memory-labyrinth-overview.png) \
+![offpath](/gamePlanning/memory-labyrinth-offPath.png) \
+![deadend](/gamePlanning/memory-labyrinth-deadend.png) \
+![win](/gamePlanning/memory-labyrinth-win.png) 
 
 
 ## ERDs:
