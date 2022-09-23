@@ -39,26 +39,37 @@ ctx.floor=game.floor
 // } 
 
 // Portal creation - fixed object - interactable
-function makeDoor() {
-    door = new Image ();
-    door.src = './portal/dark-portal.png'
-    door.onload = function(){
-        ctx.drawImage(door, 0, 0, 30, 30, 600, 45, 40, 40);
-    // console.log('this is a portal', makeDoor())
+class Portal {
+    constructor(isReached){
+        this.x = this.x,
+        this.y = this.y,
+        this.width = this.width,
+        this.height = this.height,
+        this.color = 'white',
+        this.isReached = isReached,
+        this.draw = () => {
+            ctx.fillRect(525, 25, 100, 100);
+            ctx.clearRect(545, 45, 60, 60);
+            ctx.strokeRect(550, 50, 50, 50);
+        }
+    console.log('this is my portal', Portal)
     }
 }
 
-makeDoor();
-console.log(makeDoor())
+const portal = new Portal(false) 
+portal.draw()
+
+// makeDoor();
+// console.log('door', makeDoor())
 
 // Box creation. There will be multiple boxes spanning from the top of the screen
 const Box = class { //consider making this a class for easily making boxes
-    constructor (x, y, color) {
+    constructor (x, y) {
         this.x = x,
         this.y = y,
         this.vx = 0,
         this.vy = 5,
-        this.color = color,
+        this.color = 'pink',
         this.width = 75,
         this.height = 75,
         this.falling = true,
@@ -73,23 +84,20 @@ const Box = class { //consider making this a class for easily making boxes
             // ctx.fillStyle = this.color
             // ctx.fill();
             // console.log(this.height)
-
             },    
-        this.fall = () => {
-            this.x = this.x+this.vx,
+            this.fall = () => {
+            if (this.y > 530) {
+                // console.log('this is y', this.y)
+                this.y = 530
+            }
             this.y = this.y+this.vy,
+            // this.x = this.x+this.xy,
             this.draw()
-            if (this.x <= 0) {
-                this.x = 0
-            }
-            if (this.y <= 0) {
-                this.y = 0
-            }
             }
         }
     }
 
-const AndrewsBox = new Box(50, 15, 'black');
+const AndrewsBox = new Box(50, 0);
 // console.log('this is the box object', AndrewsBox);
 // console.log('this is the game', game);
 AndrewsBox.draw()
@@ -108,7 +116,7 @@ function generateBlocks() {
     arrayBoxes.push(new AvoidBox(50, enemySpeed));
 }
 
-
+// unused box drawing coding
 // function draw(box) {
 //     ctx.fillStyle = 'rgba(255, 255, 255, .3)';
 //     ctx.fillRect(0, 0, game.width, game.height);
@@ -143,7 +151,7 @@ function generateBlocks() {
 
 // the main character
 class Character {
-    constructor(width, height, alive) {
+    constructor(alive) {
         this.x = 0,
         this.y = 550,
         this.width = 50,
@@ -152,7 +160,7 @@ class Character {
         this.color = 'black',
         this.jumpHeight = 12;
         this.shouldJump = false;
-        this.jumpCounter = 0;
+        // this.jumpCounter = 0;
         // this.isHolding = false,
         // this.escaped = false,
         this.speed = 15,
@@ -163,31 +171,35 @@ class Character {
             right: false,
         }
     
-        // jump() {
-        //     if(this.shouldJump) {
-        //         this.jumpCounter++
-        //         if(this.jumpCounter < 15) {
-        //             // jump up
-        //             this.y -= this.jumpHeight;
-        //         } else if(this.jumpCounter > 14 && this.jumpCounter < 19) {
-        //             this.y += 0;
-        //         } else if(this.jumpCounter < 33) {
-        //             // fall back down
-        //             this.y += this.jumpHeight;
-        //         }
-        //         // End the cycle
-        //         if (this.jumpCounter >= 32) {
-        //             this.shouldJump = false;
-        //         }
-        //     }
+
+
+        // A jump that should work?
+    // jump() {
+    //     if(this.shouldJump) {
+    //         if(this.jumpCounter < 15) {
+    //             // jump up
+    //             this.y -= this.jumpHeight;
+    //         } else if(this.jumpCounter > 14 && this.jumpCounter < 19) {
+    //             this.y += 0;
+    //         } else if(this.jumpCounter < 33) {
+    //             // fall back down
+    //             this.y += this.jumpHeight;
+    //         }
+    //         // End the cycle
+    //         if (this.jumpCounter >= 32) {
+    //             this.shouldJump = false;
+    //         }
+    //     }
+    // }
+    // draw() {
+    //     this.jump();
+    //     ctx.fillStyle = this.color;
+    //     ctx.fillRect(this.x, this.y, this.size, this.size);
+    //     // this.size is NOT A TYPO
+    //     }
+
         
-        // draw() {
-        //     this.jump();
-        //     ctx.fillStyle = this.color;
-        //     ctx.fillRect(this.x, this.y, this.size, this.size);
-        //     // this.size is NOT A TYPO
-        //     }
-        // }
+
         // horizontal movement
         this.setDirection = function (key) {
             // console.log('this is the key that was pressed', key)
@@ -249,6 +261,7 @@ class Character {
         drawBackground();
         // Foreground
         character.draw();
+        
     }
 
     // animate(character);
@@ -259,15 +272,15 @@ class Character {
     // }
 
     // Event Listeners
-    // addEventListener("keydown", e =>{
-    //     if(e.code === "Space") {
-    //         if(!character.shouldJump) {
-    //             // jumpSFX.play();
-    //             character.jumpCounter = 0;
-    //             character.shouldJump = true;
-    //         }
-    //     }
-    // })
+    addEventListener("keydown", e =>{
+        if(e.code === "Space") {
+            if(!character.shouldJump) {
+                // jumpSFX.play();
+                // character.jumpCounter = 0;
+                character.shouldJump = true;
+            }
+        }
+    })
 
 document.addEventListener('keydown', (e) =>{
     character.setDirection(e.key)
@@ -292,13 +305,17 @@ const gameLoop = () => {
     if (AndrewsBox.falling === true) {
         AndrewsBox.fall()
     }
+
+    if (portal.isReached === false) {
+        portal.draw()
+    }
     
     // this will replace the loop above, when I figure out my rendering issue
-    if (Character.alive === true) {
-        // music
-        AndrewsBox.falling === true
-        AndrewsBox.fall()
-    }
+    // if (Character.alive === true) {
+    //     // music
+    //     AndrewsBox.falling === true
+    //     AndrewsBox.fall()
+    // }
 
     // box falling loop goes here
     // box stacking loop goes here
