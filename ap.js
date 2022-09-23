@@ -52,7 +52,7 @@ class Portal {
             ctx.clearRect(545, 45, 60, 60);
             ctx.strokeRect(550, 50, 50, 50);
         }
-    console.log('this is my portal', Portal)
+    // console.log(Portal)
     }
 }
 
@@ -198,20 +198,29 @@ class Character {
     //     // this.size is NOT A TYPO
     //     }
 
-        
+        // vertical movement
+        // this.setJump = function (key) {
+        //     console.log('the pressed key:', key)
+        //     if (key == 'space') { this.direction.up = true}
+        // },
+
+        // this.setJump = function (key) {
+        //     console.log('the pressed key:', key)
+        //     if (key == 'space') { this.direction.up = false}
+        // }
 
         // horizontal movement
         this.setDirection = function (key) {
-            // console.log('this is the key that was pressed', key)
-            // if (key.toLowerCase() == 'w') { this.direction.up = true }
+            console.log('this is the key that was pressed', key)
+            if (key.toLowerCase() === 'space') { this.direction.up = true }
             if (key.toLowerCase() == 'a') { this.direction.left = true }
             // if (key.toLowerCase() == 's') { this.direction.down = true }
             if (key.toLowerCase() == 'd') { this.direction.right = true }
         },
 
         this.unsetDirection = function (key) {
-            // console.log('this is the key that was released', key)
-            // if (key.toLowerCase() == 'w') { this.direction.up = false }
+            console.log('this is the key that was released', key)
+            if (key.toLowerCase() === 'space') { this.direction.up = false }
             if (key.toLowerCase() == 'a') { this.direction.left = false }
             // if (key.toLowerCase() == 's') { this.direction.down = false }
             if (key.toLowerCase() == 'd') { this.direction.right = false }
@@ -230,12 +239,12 @@ class Character {
                     this.x = 0
                 }
             }
-            if (this.direction.down) {
-                this.y += this.speed
-                if (this.y + this.height >= game.height) {
-                    this.y = game.height - this.height
-                }
-            }
+            // if (this.direction.down) {
+            //     this.y += this.speed
+            //     if (this.y + this.height >= game.height) {
+            //         this.y = game.height - this.height
+            //     }
+            // }
             if (this.direction.right) {
                 this.x += this.speed
                 if (this.x + this.width >= game.width) {
@@ -260,7 +269,7 @@ class Character {
         // Canvas Logic
         drawBackground();
         // Foreground
-        character.draw();
+        // character.draw();
         
     }
 
@@ -272,22 +281,22 @@ class Character {
     // }
 
     // Event Listeners
-    addEventListener("keydown", e =>{
-        if(e.code === "Space") {
-            if(!character.shouldJump) {
-                // jumpSFX.play();
-                // character.jumpCounter = 0;
-                character.shouldJump = true;
-            }
-        }
-    })
+    // addEventListener("keydown", e =>{
+    //     if(e.code === "Space") {
+    //         if(!character.shouldJump) {
+    //             // jumpSFX.play();
+    //             // character.jumpCounter = 0;
+    //             character.shouldJump = true;
+    //         }
+    //     }
+    // })
 
 document.addEventListener('keydown', (e) =>{
     character.setDirection(e.key)
 })
 
 document.addEventListener('keyup', (e) =>{
-    if(['w', 'a', 's', 'd'].includes(e.key)) {
+    if(['space', 'a', 'd'].includes(e.key)) {
         character.unsetDirection(e.key)
     }
 })
