@@ -45,7 +45,7 @@ class Portal {
         this.y = this.y,
         this.width = this.width,
         this.height = this.height,
-        this.color = 'white',
+        this.color = 'red',
         this.isReached = isReached,
         this.draw = () => {
             ctx.fillRect(525, 25, 100, 100);
@@ -69,7 +69,7 @@ const Box = class { //consider making this a class for easily making boxes
         this.y = y,
         this.vx = 0,
         this.vy = 5,
-        this.color = 'black',
+        this.color = 'purple',
         this.width = 75,
         this.height = 75,
         this.falling = true,
@@ -133,39 +133,6 @@ function generateBox() {
     // console.log('new math', newX)
 }
 
-// unused box drawing coding
-// function draw(box) {
-//     ctx.fillStyle = 'rgba(255, 255, 255, .3)';
-//     ctx.fillRect(0, 0, game.width, game.height);
-//     // box.draw();
-//     box.x += box.vx; 
-//     box.y += box.vy;
-//     box.vy *= .99;
-//     box.vy += .25;
-    
-//     if (box.y + box.vy > game.height ||
-//         box.y + box.vy < 0) {
-//             box.vy =-box.vy;
-//         }
-//     if (box.x + box.xy > game.width ||
-//         box.x + box.xy < 0) {
-//             box.vy =-box.xy;
-//         }
-//     raf = window.requestAnimationFrame(draw);
-//     console.log('what does raf do?', raf)
-// }
-
-// game.addEventListener('DOMContentLoaded', (e) => {
-//     raf = window.requestAnimationFrame(draw);
-// });
-// // game.addEventListener('DOMContentLoaded', (e) =>{
-//     window.cancelAnimationFrame(raf);
-// });
-
-// box.draw();
-// console.log('this is a box?', box)
-// console.log('this should be drawing the box', box.draw())
-
 // the main character
 class Character {
     constructor(alive) {
@@ -174,7 +141,7 @@ class Character {
         this.width = 50,
         this.height = 50,
         this.alive = alive,
-        this.color = 'white',
+        this.color = 'pink',
         // this.jumpCounter = 0;
         // this.isHolding = false,
         // this.escaped = false,
@@ -276,36 +243,36 @@ class Character {
 }
 
 
-    const character = new Character(true)
+const character = new Character(true)
 
-    function animate () {
-        requestAnimationFrame(animate)
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        
-        // Canvas Logic
-        drawBackground();
-        // Foreground
-        // character.draw();
-        
-    }
+function animate () {
+    requestAnimationFrame(animate)
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    // Canvas Logic
+    drawBackground();
+    // Foreground
+    // character.draw();
+    
+}
 
-    // animate(character);
-    // const character = new Character(10, 450, 'white', 50, 50, true)
-    // random box placement
-    // const randomBoxes = (max) => {
-    //     return (Math.floor.random() * max)
-    // }
+// animate(character);
+// const character = new Character(10, 450, 'white', 50, 50, true)
+// random box placement
+// const randomBoxes = (max) => {
+//     return (Math.floor.random() * max)
+// }
 
-    // Event Listeners
-    // addEventListener("keydown", e =>{
-    //     if(e.code === "Space") {
-    //         if(!character.shouldJump) {
-    //             // jumpSFX.play();
-    //             // character.jumpCounter = 0;
-    //             character.shouldJump = true;
-    //         }
-    //     }
-    // })
+// Event Listeners
+// addEventListener("keydown", e =>{
+//     if(e.code === "Space") {
+//         if(!character.shouldJump) {
+//             // jumpSFX.play();
+//             // character.jumpCounter = 0;
+//             character.shouldJump = true;
+//         }
+//     }
+// })
 
 document.addEventListener('keydown', (e) =>{
     character.setDirection(e.key)
@@ -319,11 +286,21 @@ document.addEventListener('keyup', (e) =>{
 
 const detectHit = (thing) => {
     // when the box is falling, the box can kill the character
-    if(character.x + character.y === thing.x + thing.y) {
-        character.alive = false
+    if (
+        rect1.x < rect2.x + rect2.w &&
+        rect1.x + rect1.w > rect2.x &&
+        rect1.y < rect2.y + rect2.h &&
+        rect1.h + rect1.y > rect2.y
+    ) {
+        // Collision detected!
+        this.color("green");
+    } else {
+        // No collision
+        this.color("blue");
     }
 }
 
+// starts the action!
 const gameLoop = () => {
     ctx.clearRect(0, 0, game.width, game.height)
 
