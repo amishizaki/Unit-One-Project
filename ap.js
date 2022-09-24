@@ -194,7 +194,7 @@ class Character {
 
         // horizontal movement
         this.setDirection = (key) => {
-            console.log('this is the key that was pressed', key)
+            // console.log('this is the key that was pressed', key)
             if (key.toLowerCase() === 'space') { this.direction.up = true }
             if (key.toLowerCase() == 'a') { this.direction.left = true }
             // if (key.toLowerCase() == 's') { this.direction.down = true }
@@ -202,7 +202,7 @@ class Character {
         },
 
         this.unsetDirection = (key) => {
-            console.log('this is the key that was released', key)
+            // console.log('this is the key that was released', key)
             if (key.toLowerCase() === 'space') { this.direction.up = false }
             if (key.toLowerCase() == 'a') { this.direction.left = false }
             // if (key.toLowerCase() == 's') { this.direction.down = false }
@@ -287,16 +287,16 @@ document.addEventListener('keyup', (e) =>{
 const detectHit = (thing) => {
     // when the box is falling, the box can kill the character
     if (
-        rect1.x < rect2.x + rect2.w &&
-        rect1.x + rect1.w > rect2.x &&
-        rect1.y < rect2.y + rect2.h &&
-        rect1.h + rect1.y > rect2.y
+        character.x < thing.x + thing.w &&
+        character.x + character.w > thing.x &&
+        character.y < thing.y + thing.h &&
+        character.h + character.y > thing.y
     ) {
         // Collision detected!
-        this.color("green");
+        character.alive = false;
     } else {
         // No collision
-        this.color("blue");
+        character.alive = true;
     }
 }
 
