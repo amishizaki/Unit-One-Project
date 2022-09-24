@@ -141,7 +141,7 @@ class Character {
         this.width = 50,
         this.height = 50,
         this.alive = alive,
-        this.color = 'pink',
+        this.color = 'aquamarine',
         // this.jumpCounter = 0;
         // this.isHolding = false,
         // this.escaped = false,
@@ -291,10 +291,11 @@ const detectHit = (thing) => {
         character.y < thing.y + thing.height &&
         character.y + character.height > thing.y) {
         // Collision detected!
-        character.alive = false;
+        character.alive === false;
+        stopGameLoop()
     } else {
         // No collision
-        character.alive = true;
+        character.alive === true;
     }
 }
 
@@ -302,6 +303,7 @@ const detectHit = (thing) => {
 const gameLoop = () => {
     ctx.clearRect(0, 0, game.width, game.height)
 
+    // door reached or not loop goes here
     if (portal.isReached === false) {
         portal.draw()
     } else {
@@ -311,35 +313,18 @@ const gameLoop = () => {
         // music
         generateBox()
         // console.log(arrayBoxes)
+        // box stacking loop goes here
         arrayBoxes.forEach((box) => {
+            // box falling loop goes here
             box.fall()
             // console.log(box)
             box.draw()
             // check for collisions here
             detectHit(box)
         })
-
+        // check for falling, if not, stop
     }
-    if (character.alive === false) {
-        stopGameLoop
-    }
-
-    // if(arrayBoxes.length > 50) {
-    //     generateBox()
-    // }
     
-    // check for falling, if not, stop
-
-    // box falling loop goes here
-    // box stacking loop goes here
-    // door reached or not loop goes here
-
-    if (character.alive) {
-        detectHit(arrayBoxes)
-    } else if (character.alive === false) {
-        stopGameLoop()
-    }
-
     // movement.textContent = character.x + ", " + character.y
     character.moveCharacter()
     character.render()
