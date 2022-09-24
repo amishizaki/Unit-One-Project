@@ -286,12 +286,10 @@ document.addEventListener('keyup', (e) =>{
 
 const detectHit = (thing) => {
     // when the box is falling, the box can kill the character
-    if (
-        character.x < thing.x + thing.w &&
-        character.x + character.w > thing.x &&
-        character.y < thing.y + thing.h &&
-        character.h + character.y > thing.y
-    ) {
+    if (character.x < thing.x + thing.width &&
+        character.x + character.width > thing.x &&
+        character.y < thing.y + thing.height &&
+        character.y + character.height > thing.y) {
         // Collision detected!
         character.alive = false;
     } else {
@@ -306,9 +304,9 @@ const gameLoop = () => {
 
     if (portal.isReached === false) {
         portal.draw()
+    } else {
+        // colorful magic show
     }
-    
-    // this will replace the loop above, when I figure out my rendering issue
     if (character.alive === true) {
         // music
         generateBox()
@@ -316,9 +314,14 @@ const gameLoop = () => {
         arrayBoxes.forEach((box) => {
             box.fall()
             // console.log(box)
-            // check for collisions here
             box.draw()
+            // check for collisions here
+            detectHit(box)
         })
+
+    }
+    if (character.alive === false) {
+        stopGameLoop
     }
 
     // if(arrayBoxes.length > 50) {
