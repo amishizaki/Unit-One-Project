@@ -60,7 +60,7 @@ class Plaftform {
         this.y = y,
         this.width = width,
         this.height = 10
-        this.color = 'blue',
+        this.color = 'blacks',
         this.draw = () => {
             ctx.fillRect(this.x, this.y, this.width, this.height)
             ctx.strokeRect(this.x, this.y, this.width, this.height)
@@ -85,7 +85,7 @@ const Box = class {
         this.y = y,
         this.vx = 0,
         this.vy = 5,
-        this.color = 'purple',
+        this.color = 'black',
         this.width = 75,
         this.height = 75,
         this.falling = falling,
@@ -153,7 +153,7 @@ class Character {
         this.width = 50,
         this.height = 50,
         this.alive = alive,
-        this.color = 'aquamarine',
+        this.color = 'black',
         // this.jumpCounter = 0;
         // this.isHolding = false,
         // this.escaped = false,
@@ -368,5 +368,6 @@ const stopGameLoop = () => {clearInterval(gameInterval)}
 // Start the gameLoop here with this button
 const startBtn = document.getElementById('startBtn');
 startBtn.addEventListener('click', function () {
+    console.log(startBtn)
     gameInterval
 })
