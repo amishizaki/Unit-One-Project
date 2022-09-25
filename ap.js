@@ -33,9 +33,8 @@ ctx.floor=game.floor
 // let gameOverSFX = new Audio("")
 // let jumpSFX = new Audio("")
 
-// Testing start Game button!
+// Start the gameLoop here with this button
 // function startBtn() {
-
 // } 
 
 // Portal creation - fixed object - interactable
@@ -57,14 +56,32 @@ class Portal {
 }
 
 const portal = new Portal(false) 
-// portal.draw()
 
-// makeDoor();
-// console.log('door', makeDoor())
+class Plaftform {
+    constructor(x, y, width) {
+        this.x = x,
+        this.y = y,
+        this.width = width,
+        this.height = 10
+        this.color = 'blue',
+        this.draw = () => {
+            ctx.fillRect(this.x, this.y, this.width, this.height)
+            ctx.strokeRect(this.x, this.y, this.width, this.height)
+            ctx.fillStyle = this.color
+        }
+    }
+}
+const platformOne = new Plaftform(500, 500, 100);
+const platformTwo = new Plaftform(400, 400, 50);
+const platformThree = new Plaftform(250, 350, 25);
+const platformFour = new Plaftform(100, 250, 60);
+const platformFive = new Plaftform(280, 150, 80);
+const platformSix = new Plaftform(440, 190, 40);
+
 
 // Box creation. There will be multiple boxes spanning from the top of the screen
 const Box = class { //consider making this a class for easily making boxes
-    constructor (x, y) {
+    constructor (x, y, falling) {
         this.x = x,
         this.y = y,
         this.vx = 0,
@@ -72,7 +89,7 @@ const Box = class { //consider making this a class for easily making boxes
         this.color = 'purple',
         this.width = 75,
         this.height = 75,
-        this.falling = true,
+        this.falling = falling,
         this.isHeld = false,
         this.isStacked = false,
         this.draw = () => {
@@ -89,6 +106,7 @@ const Box = class { //consider making this a class for easily making boxes
             if (this.y >= 530) {
                 // console.log('this is y', this.y)
                 this.y = 530
+                this.falling = false
             } else {
             this.y = this.y+this.vy
             // this.x = this.x+this.xy
@@ -98,7 +116,7 @@ const Box = class { //consider making this a class for easily making boxes
         }
     }
 
-const AndrewsBox = new Box(50, 0);
+const AndrewsBox = new Box(50, 0, true);
 // console.log('this is the box object', AndrewsBox);
 // console.log('this is the game', game);
 // AndrewsBox.draw()
@@ -284,6 +302,15 @@ document.addEventListener('keyup', (e) =>{
     }
 })
 
+const portalMet = (thing) => {
+    if (character.x < thing.x + thing.width &&
+        character.x + character.width > thing.x &&
+        character.y < thing.y + thing.height &&
+        character.y + character.height > thing.y) {
+            gameWon()
+        }
+}
+
 const detectHit = (thing) => {
     // when the box is falling, the box can kill the character
     if (character.x < thing.x + thing.width &&
@@ -306,6 +333,12 @@ const gameLoop = () => {
     // door reached or not loop goes here
     if (portal.isReached === false) {
         portal.draw()
+        platformOne.draw()
+        platformTwo.draw()
+        platformThree.draw()
+        platformFour.draw()
+        platformFive.draw()
+        platformSix.draw()
     } else {
         // colorful magic show
     }
@@ -320,7 +353,12 @@ const gameLoop = () => {
             // console.log(box)
             box.draw()
             // check for collisions here
-            detectHit(box)
+            if(arrayBoxes.falling === false) {
+                character.alive === true
+            } else {
+                detectHit(box)
+                console.log('are the boxes falling?', arrayBoxes.falling)
+            }
         })
         // check for falling, if not, stop
     }
