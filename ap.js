@@ -25,8 +25,7 @@ game.setAttribute('width', getComputedStyle(game)['width'])
 game.setAttribute('height', getComputedStyle(game)['height'])
 ctx.width=game.width
 ctx.height=game.height
-ctx.floor=game.floor
-// ctx.lineWidth=5
+ctx.lineWidth=.5
 
 //SFX
 // let scoreSFX = new Audio("");
@@ -60,7 +59,7 @@ class Plaftform {
         this.y = y,
         this.width = width,
         this.height = 10
-        this.color = 'blacks',
+        this.color = 'black',
         this.draw = () => {
             ctx.fillRect(this.x, this.y, this.width, this.height)
             ctx.strokeRect(this.x, this.y, this.width, this.height)
@@ -85,16 +84,13 @@ const Box = class {
         this.y = y,
         this.vx = 0,
         this.vy = 5,
-        this.color = 'black',
+        this.color = 'goldenrod',
         this.width = 75,
         this.height = 75,
         this.falling = falling,
         this.isHeld = false,
         this.isStacked = false,
         this.draw = () => {
-            // ctx.beginPath();
-            // ctx.arc(this.x, this.y, this.width, this.height, Math.PI * 2, true);
-            // ctx.closePath();
             ctx.fillRect(this.x, this.y, this.width, this.height)
             ctx.strokeRect(this.x, this.y, this.width, this.height)
             ctx.fillStyle = this.color
@@ -111,7 +107,6 @@ const Box = class {
             // this.x = this.x+this.xy
             }
         }
-            // this.draw()
         }
     }
 
@@ -130,8 +125,7 @@ let dropSpeed = 60
 function generateBox() {
     // console.log('array box length', arrayBoxes.length)
     // console.log('this is the boxTimer', boxTimer)
-    // let timeDelay = randomNumberInterval(presetTime);
-    // set timer and set max produced boxed
+    // how many boxes at a time
     if(boxTimer === dropSpeed) {
         const newX = Math.floor(Math.random()*650)
         arrayBoxes.push(new Box(newX, 0))
@@ -150,15 +144,20 @@ class Character {
     constructor(alive) {
         this.x = 0,
         this.y = 550,
+        this.vx = 5,
+        this.vy = 10,
+        this.gravity = 0.4,
         this.width = 50,
         this.height = 50,
         this.alive = alive,
-        this.color = 'black',
+        this.color = 'aquamarine',
         // this.jumpCounter = 0;
         // this.isHolding = false,
         // this.escaped = false,
         this.speed = 15,
-        this.jumpHeight = 12,
+        this.jumpHeight = 10,
+        this.jumpTimer = 3000,
+        this.jumpCount = 0,
         this.shouldJump = false,
         this.direction = {
             // up: false,
@@ -166,67 +165,49 @@ class Character {
             left: false,
             right: false,
         },
-    
 
-        // A jump that should work?
-    // jump() {
-    //     if(this.shouldJump) {
-    //         if(this.jumpCounter < 15) {
-    //             // jump up
-    //             this.y -= this.jumpHeight;
-    //         } else if(this.jumpCounter > 14 && this.jumpCounter < 19) {
-    //             this.y += 0;
-    //         } else if(this.jumpCounter < 33) {
-    //             // fall back down
-    //             this.y += this.jumpHeight;
-    //         }
-    //         // End the cycle
-    //         if (this.jumpCounter >= 32) {
-    //             this.shouldJump = false;
-    //         }
-    //     }
-    // }
-    // draw() {
-    //     this.jump();
-    //     ctx.fillStyle = this.color;
-    //     ctx.fillRect(this.x, this.y, this.size, this.size);
-    //     // this.size is NOT A TYPO
-    //     }
+        // getting upward movement with gravity.
+        // player.velocity.y -= 20
 
-        // vertical movement
-        // this.setJump = function (key) {
-        //     console.log('the pressed key:', key)
-        //     if (key == 'space') { this.direction.up = true}
-        // },
-
-        // this.setJump = function (key) {
-        //     console.log('the pressed key:', key)
-        //     if (key == 'space') { this.direction.up = false}
-        // }
-
-        // horizontal movement
+        // character movement
         this.setDirection = (key) => {
-            // console.log('this is the key that was pressed', key)
-            if (key.toLowerCase() === 'space') { this.direction.up = true }
+
+            if (key == ' ') { this.shouldJump = true }
             if (key.toLowerCase() == 'a') { this.direction.left = true }
             // if (key.toLowerCase() == 's') { this.direction.down = true }
             if (key.toLowerCase() == 'd') { this.direction.right = true }
+            // console.log('this is the key that was pressed', key)
         },
 
         this.unsetDirection = (key) => {
             // console.log('this is the key that was released', key)
-            if (key.toLowerCase() === 'space') { this.direction.up = false }
+            if (key == ' ') { this.shouldJump = false }
             if (key.toLowerCase() == 'a') { this.direction.left = false }
             // if (key.toLowerCase() == 's') { this.direction.down = false }
             if (key.toLowerCase() == 'd') { this.direction.right = false }
         },
 
         this.moveCharacter = () => {
-            if (this.direction.up) {
-                this.y -= this.speed
-                if (this.y <= 0) {
-                    this.y = 0
+
+            if (this.shouldJump) {
+                // console.log('jump check', this.shouldJump)
+                // console.log('space hit')
+                this.jumpCount++
+                if(this.jumpCount < 15) {
+                    // jump up
+                    this.y -= this.jumpHeight;
+                } else if(this.jumpCount > 14 && this.jumpCount < 19) {
+                    this.y += 0;
+                } else if(this.jumpCount < 33) {
+                    // fall back down
+                    this.y += this.jumpHeight;
                 }
+                // end the cycle
+                if (this.jumpCount >= 32) {
+                    this.shouldJump = false
+                    this.jumpCount = 0
+                }
+                // console.log('this should jump', this.shouldJump)
             }
             if (this.direction.left) {
                 this.x -= this.speed
@@ -254,7 +235,6 @@ class Character {
     }
 }
 
-
 const character = new Character(true)
 
 function animate () {
@@ -265,7 +245,9 @@ function animate () {
     drawBackground();
     // Foreground
     // character.draw();
-    
+    if (character.y + character.height <= Plaftform.y) {
+        character.vy = 0
+    }
 }
 
 // animate(character);
@@ -312,11 +294,12 @@ const detectHit = (thing) => {
         character.y < thing.y + thing.height &&
         character.y + character.height > thing.y) {
         // Collision detected!
-        character.alive === false;
+        character.alive = false;
+        console.log('character status', character.alive)
         stopGameLoop()
     } else {
         // No collision
-        character.alive === true;
+        character.alive = true;
     }
 }
 
@@ -347,10 +330,11 @@ const gameLoop = () => {
             // console.log(box)
             box.draw()
             // check for collisions here
-            if(arrayBoxes.falling === false) {
+            if(box.falling === false) {
                 detectHit(box)
             } 
         })
+        
         // check for falling, if not, stop
     }
     
@@ -365,9 +349,10 @@ const gameInterval = setInterval(gameLoop, 60)
 
 const stopGameLoop = () => {clearInterval(gameInterval)}
 
+// Why is this not working?
 // Start the gameLoop here with this button
 const startBtn = document.getElementById('startBtn');
 startBtn.addEventListener('click', function () {
-    console.log(startBtn)
     gameInterval
+    console.log(startBtn)
 })
