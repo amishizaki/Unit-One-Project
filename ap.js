@@ -33,10 +33,6 @@ ctx.floor=game.floor
 // let gameOverSFX = new Audio("")
 // let jumpSFX = new Audio("")
 
-// Start the gameLoop here with this button
-// function startBtn() {
-// } 
-
 // Portal creation - fixed object - interactable
 class Portal {
     constructor(isReached){
@@ -57,6 +53,7 @@ class Portal {
 
 const portal = new Portal(false) 
 
+// adding in platforms for ease of movement
 class Plaftform {
     constructor(x, y, width) {
         this.x = x,
@@ -71,6 +68,8 @@ class Plaftform {
         }
     }
 }
+
+// I'm sure there's an easier way to do this, but this is what I got right now
 const platformOne = new Plaftform(500, 500, 100);
 const platformTwo = new Plaftform(400, 400, 50);
 const platformThree = new Plaftform(250, 350, 25);
@@ -80,7 +79,7 @@ const platformSix = new Plaftform(440, 190, 40);
 
 
 // Box creation. There will be multiple boxes spanning from the top of the screen
-const Box = class { //consider making this a class for easily making boxes
+const Box = class {
     constructor (x, y, falling) {
         this.x = x,
         this.y = y,
@@ -116,15 +115,10 @@ const Box = class { //consider making this a class for easily making boxes
         }
     }
 
+// Andrew helped me get the boxes to work, so, I'm leaving this in
 const AndrewsBox = new Box(50, 0, true);
 // console.log('this is the box object', AndrewsBox);
 // console.log('this is the game', game);
-// AndrewsBox.draw()
-
-// Eventually this button will start the whole game - should probably go in game loop
-// game.addEventListener('button.click', function(event){
-//     AndrewsBox.draw(ctx)
-// })
 
 // Boxes get sorted here after they've entered the screen
 let arrayBoxes = [];
@@ -354,11 +348,8 @@ const gameLoop = () => {
             box.draw()
             // check for collisions here
             if(arrayBoxes.falling === false) {
-                character.alive === true
-            } else {
                 detectHit(box)
-                console.log('are the boxes falling?', arrayBoxes.falling)
-            }
+            } 
         })
         // check for falling, if not, stop
     }
@@ -374,6 +365,8 @@ const gameInterval = setInterval(gameLoop, 60)
 
 const stopGameLoop = () => {clearInterval(gameInterval)}
 
-document.addEventListener('DOMContentLoaded', function () {
+// Start the gameLoop here with this button
+const startBtn = document.getElementById('startBtn');
+startBtn.addEventListener('click', function () {
     gameInterval
 })
