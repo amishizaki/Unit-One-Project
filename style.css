@@ -4,6 +4,7 @@ html, body {
 }
 
 body {
+    border: 3px solid white;
     background-color: #222;
     height: fit-content;
     color: white;
