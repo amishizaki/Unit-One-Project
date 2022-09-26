@@ -40,7 +40,7 @@ class Portal {
         this.y = this.y,
         this.width = this.width,
         this.height = this.height,
-        this.color = 'red',
+        this.color = 'white',
         this.isReached = false,
         this.draw = () => {
             ctx.fillRect(525, 25, 100, 100);
@@ -85,7 +85,7 @@ const Box = class {
         this.y = y,
         this.vx = 0,
         this.vy = 5,
-        this.color = 'goldenrod',
+        this.color = 'black',
         this.width = 75,
         this.height = 75,
         this.falling = falling,
@@ -151,7 +151,7 @@ class Character {
         this.width = 50,
         this.height = 50,
         this.alive = alive,
-        this.color = 'aquamarine',
+        this.color = 'black',
         // this.jumpCounter = 0;
         // this.isHolding = false,
         // this.escaped = false,
@@ -249,24 +249,27 @@ function animate () {
     
 }
 
-document.addEventListener('keydown', (e) =>{
+document.addEventListener('keydown', (e) => {
     character.setDirection(e.key)
 })
 
-document.addEventListener('keyup', (e) =>{
+document.addEventListener('keyup', (e) => {
     if(['space', 'a', 'd'].includes(e.key)) {
         character.unsetDirection(e.key)
     }
 })
 
 const gameWon = () => {
- if (portal.reached === true) {
-    document.getElementById('container')
-    console.log('container')
- }
+    document.getElementsById("canvas").classList.remove("canvas")
+    document.getElementsById("canvas").classList.add("canvasRainbow")
+    
+    // .style.background = 'linear-gradient: blue, purple'
+    console.log('game won', canvas)
+ 
 }
+
 // detect portal
-const portalMet = (thing) => {
+const detectPortal = (thing) => {
     if (character.x < thing.x + thing.width &&
         character.x + character.width > thing.x &&
         character.y < thing.y + thing.height &&
@@ -306,13 +309,6 @@ const detectPlatform = (thing) => {
         }
 }
 
-// const detectRight = (thing) => {
-//     if (character.y < thing.y + thing.height) {
-//         character.y != thing.y
-//         console.log("detectRight")
-//     }
-// }
-
 // starts the action!
 const gameLoop = () => {
     ctx.clearRect(0, 0, game.width, game.height)
@@ -342,7 +338,7 @@ const gameLoop = () => {
             // check for collisions here
             detectHit(box)
         })
-        portalMet(portal)
+        detectPortal(portal)
         
         // check for falling, if not, stop
     }

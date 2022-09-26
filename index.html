@@ -11,10 +11,10 @@
     <body>
         <div id="container">
             <aside id="encouragement"><h2>Reach the door to see another world!</h2></aside>
-            <!-- add to button later: onclick='startGame()' -->
             <button onclick="gameStart()" id="startBtn">Start Game</button>
+            <button onclick="gameWon()" id="gameWon">You Won!</button>
             <main>
-                <canvas id="canvas" width="700" height="600"></canvas>      
+                <canvas id="canvas" class="canvas" width="700" height="600"></canvas>      
                 <div id="door"></div>
             </main>
         </div>

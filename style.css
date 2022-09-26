@@ -44,8 +44,10 @@ main {
                           "game game game"
                           "btm-left btm-right btm-right";
     }
-
-canvas {
+.canvasRainbow {
+    background-image: linear-gradient(red, purple, rgb(94, 93, 93), rgb(205, 205, 205));
+}
+.canvas {
     background-image: linear-gradient(black, rgb(16, 16, 16), rgb(94, 93, 93), rgb(205, 205, 205));
     /* background-image: url(./background/limbo_background_by_janepage_d37l9p5-fullview.jpeg); */
     /* background-repeat: no-repeat; */
@@ -67,7 +69,7 @@ canvas {
     align-items: center;
 }
 
-#startBtn {
+#startBtn, #gameWon {
     padding: 10px;
     height: fit-content;
     width: fit-content;
