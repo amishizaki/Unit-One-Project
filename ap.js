@@ -17,7 +17,7 @@ const game = document.getElementById('canvas')
 const ctx = game.getContext('2d')
 const button = document.getElementById('startBtn')
 let raf;
-let globalGameStopdId
+let globalGameStopId
 
 // canvas.width = window.innerWidth;
 // canvas.height = window.innerHeight;
@@ -167,9 +167,6 @@ class Character {
             right: false,
         },
 
-        // getting upward movement with gravity.
-        // player.velocity.y -= 20
-
         // character movement
         this.setDirection = (key) => {
 
@@ -216,12 +213,7 @@ class Character {
                     this.x = 0
                 }
             }
-            // if (this.direction.down) {
-            //     this.y += this.speed
-            //     if (this.y + this.height >= game.height) {
-            //         this.y = game.height - this.height
-            //     }
-            // }
+
             if (this.direction.right) {
                 this.x += this.speed
                 if (this.x + this.width >= game.width) {
@@ -238,34 +230,25 @@ class Character {
 
 const character = new Character(true)
 
-function animate () {
-    requestAnimationFrame(animate)
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
-    // Canvas Logic
-    drawBackground();
-    // Foreground
-    // character.draw();
-    
-}
+// function animate () {
+//     requestAnimationFrame(animate)
+//     ctx.clearRect(0, 0, canvas.width, canvas.height);
+// }
 
 document.addEventListener('keydown', (e) => {
     character.setDirection(e.key)
 })
 
 document.addEventListener('keyup', (e) => {
-    if(['space', 'a', 'd'].includes(e.key)) {
+    if(['a', 'd'].includes(e.key)) {
         character.unsetDirection(e.key)
     }
 })
 
 const gameWon = () => {
-    document.getElementsById("canvas").classList.remove("canvas")
-    document.getElementsById("canvas").classList.add("canvasRainbow")
     
-    // .style.background = 'linear-gradient: blue, purple'
+    canvas.style.background = 'linear-gradient(red, purple)'
     console.log('game won', canvas)
- 
 }
 
 // detect portal
@@ -348,12 +331,12 @@ const gameLoop = () => {
     // console.log('character movement', character.moveCharacter)
 }
 
-const stopGameLoop = () => {clearInterval(globalGameStopdId)}
+const stopGameLoop = () => {clearInterval(globalGameStopId)}
 
 // Start the gameLoop here with this button
 const gameStart = () => {
     const gameInterval = setInterval(gameLoop, 60)
-    globalGameStopdId = gameInterval
+    globalGameStopId = gameInterval
     
     // gameInterval
 }
