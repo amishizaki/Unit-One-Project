@@ -17,6 +17,7 @@ const game = document.getElementById('canvas')
 const ctx = game.getContext('2d')
 const button = document.getElementById('startBtn')
 let raf;
+let globalGameStopdId
 
 // canvas.width = window.innerWidth;
 // canvas.height = window.innerHeight;
@@ -34,13 +35,13 @@ ctx.lineWidth=.5
 
 // Portal creation - fixed object - interactable
 class Portal {
-    constructor(isReached){
+    constructor(){
         this.x = this.x,
         this.y = this.y,
         this.width = this.width,
         this.height = this.height,
         this.color = 'red',
-        this.isReached = isReached,
+        this.isReached = false,
         this.draw = () => {
             ctx.fillRect(525, 25, 100, 100);
             ctx.clearRect(545, 45, 60, 60);
@@ -245,28 +246,8 @@ function animate () {
     drawBackground();
     // Foreground
     // character.draw();
-    if (character.y + character.height <= Plaftform.y) {
-        character.vy = 0
-    }
+    
 }
-
-// animate(character);
-// const character = new Character(10, 450, 'white', 50, 50, true)
-// random box placement
-// const randomBoxes = (max) => {
-//     return (Math.floor.random() * max)
-// }
-
-// Event Listeners
-// addEventListener("keydown", e =>{
-//     if(e.code === "Space") {
-//         if(!character.shouldJump) {
-//             // jumpSFX.play();
-//             // character.jumpCounter = 0;
-//             character.shouldJump = true;
-//         }
-//     }
-// })
 
 document.addEventListener('keydown', (e) =>{
     character.setDirection(e.key)
@@ -278,15 +259,25 @@ document.addEventListener('keyup', (e) =>{
     }
 })
 
+const gameWon = () => {
+ if (portal.reached === true) {
+    document.getElementById('container')
+    console.log('container')
+ }
+}
+// detect portal
 const portalMet = (thing) => {
     if (character.x < thing.x + thing.width &&
         character.x + character.width > thing.x &&
         character.y < thing.y + thing.height &&
         character.y + character.height > thing.y) {
+            console.log('portal met')
             gameWon()
+            stopGameLoop()
         }
 }
 
+// box detection collision
 const detectHit = (thing) => {
     // when the box is falling, the box can kill the character
     if (character.x < thing.x + thing.width &&
@@ -303,12 +294,36 @@ const detectHit = (thing) => {
     }
 }
 
+// platform detection collision
+// collision detection for all sides of platform
+const detectPlatform = (thing) => {
+    if (character.x < thing.x + thing.width &&
+        character.x + character.width > thing.x &&
+        character.y < thing.y + thing.height &&
+        character.y + character.height > thing.y) {
+            character.y = 0
+            // console.log("detectPlatform")
+        }
+}
+
+// const detectRight = (thing) => {
+//     if (character.y < thing.y + thing.height) {
+//         character.y != thing.y
+//         console.log("detectRight")
+//     }
+// }
+
 // starts the action!
 const gameLoop = () => {
     ctx.clearRect(0, 0, game.width, game.height)
 
     // door reached or not loop goes here
-    if (portal.isReached === false) {
+    
+    if (character.alive === true) {
+        // console.log(character)
+        // music
+        generateBox()
+        detectPlatform(platformOne)
         portal.draw()
         platformOne.draw()
         platformTwo.draw()
@@ -316,12 +331,7 @@ const gameLoop = () => {
         platformFour.draw()
         platformFive.draw()
         platformSix.draw()
-    } else {
-        // colorful magic show
-    }
-    if (character.alive === true) {
-        // music
-        generateBox()
+        // detectRight(platformOne)
         // console.log(arrayBoxes)
         // box stacking loop goes here
         arrayBoxes.forEach((box) => {
@@ -330,29 +340,24 @@ const gameLoop = () => {
             // console.log(box)
             box.draw()
             // check for collisions here
-            if(box.falling === false) {
-                detectHit(box)
-            } 
+            detectHit(box)
         })
+        portalMet(portal)
         
         // check for falling, if not, stop
     }
-    
     // movement.textContent = character.x + ", " + character.y
     character.moveCharacter()
     character.render()
     // console.log('character movement', character.moveCharacter)
-    // box.render()
 }
 
-const gameInterval = setInterval(gameLoop, 60)
+const stopGameLoop = () => {clearInterval(globalGameStopdId)}
 
-const stopGameLoop = () => {clearInterval(gameInterval)}
-
-// Why is this not working?
 // Start the gameLoop here with this button
-const startBtn = document.getElementById('startBtn');
-startBtn.addEventListener('click', function () {
-    gameInterval
-    console.log(startBtn)
-})
+const gameStart = () => {
+    const gameInterval = setInterval(gameLoop, 60)
+    globalGameStopdId = gameInterval
+    
+    // gameInterval
+}
