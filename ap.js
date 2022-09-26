@@ -247,7 +247,7 @@ document.addEventListener('keyup', (e) => {
 
 const gameWon = () => {
     
-    canvas.style.background = 'linear-gradient(red, purple)'
+    canvas.style.background = 'linear-gradient(#B72C3C, #FFF4BC, #FED571, #FF8C4C, #AC748F, #45385B)'
     console.log('game won', canvas)
 }
 
