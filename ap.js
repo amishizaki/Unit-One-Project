@@ -248,7 +248,7 @@ document.addEventListener('keyup', (e) => {
 const gameWon = () => {
     
     canvas.style.background = 'linear-gradient(#B72C3C, #FFF4BC, #FED571, #FF8C4C, #AC748F, #45385B)'
-    console.log('game won', canvas)
+
 }
 
 // detect portal
@@ -272,7 +272,7 @@ const detectHit = (thing) => {
         character.y + character.height > thing.y) {
         // Collision detected!
         character.alive = false;
-        console.log('character status', character.alive)
+        // console.log('character status', character.alive)
         stopGameLoop()
     } else {
         // No collision
