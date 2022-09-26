@@ -263,6 +263,11 @@ const detectPortal = (thing) => {
         }
 }
 
+// game lost
+const youDied = () => {
+    canvas.style.background = 'linear-gradient(black, red)'
+}
+
 // box detection collision
 const detectHit = (thing) => {
     // when the box is falling, the box can kill the character
@@ -274,6 +279,7 @@ const detectHit = (thing) => {
         character.alive = false;
         // console.log('character status', character.alive)
         stopGameLoop()
+        youDied()
     } else {
         // No collision
         character.alive = true;
@@ -287,6 +293,7 @@ const detectPlatform = (thing) => {
         character.x + character.width > thing.x &&
         character.y < thing.y + thing.height &&
         character.y + character.height > thing.y) {
+            // below, y is currently set to zero because it was better than the other options.
             character.y = 0
             // console.log("detectPlatform")
         }
