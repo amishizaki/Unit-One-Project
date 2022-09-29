@@ -16,6 +16,9 @@
 const game = document.getElementById('canvas')
 const ctx = game.getContext('2d')
 const button = document.getElementById('startBtn')
+// initiating these variables without values is allowed but not best practice, should set them to null if you need to change them later ( as opposed to undefined later)
+// this is a nit pick that shows intentionality 
+// also, be consistent and remove semicolon, or add them everywhere
 let raf;
 let globalGameStopId
 
@@ -34,6 +37,7 @@ ctx.lineWidth=.5
 // let jumpSFX = new Audio("")
 
 // Portal creation - fixed object - interactable
+// love the use of classes here
 class Portal {
     constructor(){
         this.x = this.x,
@@ -54,6 +58,7 @@ class Portal {
 const portal = new Portal(false) 
 
 // adding in platforms for ease of movement
+// spelling! 
 class Plaftform {
     constructor(x, y, width) {
         this.x = x,
@@ -70,6 +75,7 @@ class Plaftform {
 }
 
 // I'm sure there's an easier way to do this, but this is what I got right now
+// there is, put the values into objects, which are in an array, and loop through the array with foreach and a callback that creates a new platform form the object kvp s
 const platformOne = new Plaftform(500, 500, 100);
 const platformTwo = new Plaftform(400, 400, 50);
 const platformThree = new Plaftform(250, 350, 25);
@@ -112,13 +118,15 @@ const Box = class {
     }
 
 // Andrew helped me get the boxes to work, so, I'm leaving this in
+// lol - love  good easter egg 
 const AndrewsBox = new Box(50, 0, true);
 // console.log('this is the box object', AndrewsBox);
 // console.log('this is the game', game);
 
 // Boxes get sorted here after they've entered the screen
+// we should bring these global level variables to the top of the file to stay organized
 let arrayBoxes = [];
-
+// add comments for yourself to know what these are for
 let boxTimer = 0
 let dropSpeed = 60
 
@@ -264,6 +272,7 @@ const detectPortal = (thing) => {
 }
 
 // game lost
+// love 2 things about this, 1 the styling and UX, 2 that you took it and made it it's own function 
 const youDied = () => {
     canvas.style.background = 'linear-gradient(black, red)'
 }
@@ -320,6 +329,7 @@ const gameLoop = () => {
         // detectRight(platformOne)
         // console.log(arrayBoxes)
         // box stacking loop goes here
+        // use of array iteration methods ! so good
         arrayBoxes.forEach((box) => {
             // box falling loop goes here
             box.fall()
@@ -338,6 +348,7 @@ const gameLoop = () => {
     // console.log('character movement', character.moveCharacter)
 }
 
+// does this work as intended ? consider using clear interval without the idea and targeting the function instead
 const stopGameLoop = () => {clearInterval(globalGameStopId)}
 
 // Start the gameLoop here with this button
