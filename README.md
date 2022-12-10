@@ -1,16 +1,8 @@
-# Unit-One-Project
-Unit 1 – Alina's Project ideas:
-*   Main idea – A box stacking game
-*   Secondary idea – A memory game
-
-
-### Main idea:
-## Stack to Escape
+# Escape Game
 
 ![A reference image](/gamePlanning/stack-game-reference%20image.png)
 
-
-The world is made of black and white. A black background with white lines. There is a door that is hard to reach and there are boxes falling from above. The player must push and stack the boxes in order to escape. The player must also avoid falling boxes because the impact is deadly. Once the player reaches the doorway, the world becomes multi-colored, and the player sprite does a little dance.
+The world is made of black and white. A black background with white lines. There is a door that is hard to reach and there are boxes falling from above. The player must jump from platform to platform while avoiding falling boxes - impact can be deadly. Once the player reaches the doorway, they pass through to a new world full of color.
 
 ## Technologies used:
 *   HTML5
@@ -23,10 +15,6 @@ The world is made of black and white. A black background with white lines. There
     ... move left and right \
     ... jump \
     ... avoid dangerous boxes \
-    ... push boxes \
-    ... lift boxes \
-    ... stack boxes \
-    ... drop boxes \
     ... climb boxes \
     ... reach mysterious, but promising doorway \
     ... win the game \
@@ -61,50 +49,3 @@ function – detectCrash – used to see if a box has fallen on the player
 function – movementHandler – used to move the player around, should be attached to arrow or wasd keys, and spacebar
 Function – detectTouch – used to help the player move boxes around
 ```
-
- 
-### Second Idea:
-
-## Memory Labyrinth
-![An overview image](/gamePlanning/memory-labyrinth.png)
-
-A simple puzzle game that starts with a grid of blank squares. The player must flip the squares to find the correct pathway to the MacGuffin. There are multiple pathways, but only one will lead to victory. If the player flips a square that does not contain a path piece, the squares flip back over, and the player must try again. If the player follows the wrong path to the dead end, the squares will flip back over, and the player must try again. When the player reaches the end of the labyrinth, the player wins a virtual MacGuffin!
-
-## Technologies used:
-*   HTML5
-*   CSS
-*   JavaScript
-
-## User Story:
-As a player, I want the ability to... \
-    ... start the game \
-    ... click on squares and have them react \
-    ... explore the board by clicking on squares \
-    ... explore the pathways of the game \
-    ... find the correct pathway \
-    ... win the game \
-
-## Wire Frames:
-![An intro image](/gamePlanning/memory-labyrinth-intro.png) \
-(behind the scences overview) \
-![A test image](/gamePlanning/memory-labyrinth-overview.png) \
-![offpath](/gamePlanning/memory-labyrinth-offPath.png) \
-![deadend](/gamePlanning/memory-labyrinth-deadend.png) \
-![win](/gamePlanning/memory-labyrinth-win.png) 
-
-
-## ERDs:
-```Pathway {
-If (box === green) {
-   Pathway = correct
-} else {
-   Pathway = wrong (restart)
-}
-}
-
-function – gameloop – holds the entire logic that runs the game
-function – offPath – used to see if a player has clicked a box off the path – delivers message and restarts game
-function – deadEnd – used to see if a player has reached a dead end – delivers message and restarts game
-function – gameWin – used to detect if the player has won
-```
-
